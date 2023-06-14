@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Fetch the data
           command: |
-            tox -e fetch_data
+            tox run -e fetch_data
       - run:
           name: Test the model
           command: |
@@ -74,7 +74,7 @@ jobs:
       - run:
           name: Publish model to Gemfury
           command: |
-            tox -e publish_model
+            tox run -e publish_model
 
 
   # section_08_deploy_app_container_via_railway:
@@ -106,7 +106,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py37
+            tox run -e py37
 
   test_regression_model_py38:
     docker:
@@ -120,7 +120,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py38
+            tox run -e py38
 
   test_ml_api_py37:
     docker:
@@ -134,7 +134,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py37
+            tox run -e py37
 
   test_ml_api_py38:
     docker:
@@ -148,7 +148,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py38
+            tox run -e py38
 
   train_and_upload_regression_model:
     <<: *defaults
