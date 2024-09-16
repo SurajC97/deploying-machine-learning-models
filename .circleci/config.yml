@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Fetch the data
           command: |
-            tox -e fetch_data
+            tox run -e fetch_data
       - run:
           name: Test the model
           command: |
@@ -74,25 +74,25 @@ jobs:
       - run:
           name: Publish model to Gemfury
           command: |
-            tox -e publish_model
+            tox run -e publish_model
 
 
-  section_08_deploy_app_container_via_railway:
-    <<: *defaults
-    steps:
-      - setup_remote_docker:
-          # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
-          version: 20.10.18
-      - checkout:
-          path: ~/project/
-      - node/install:
-          node-version: '16.13'
-      - run: node --version
-      - run: npm i -g @railway/cli
-      - run:
-          name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
-          command: |
-            cd section-08-deploying-with-containers && railway up --detach
+  # section_08_deploy_app_container_via_railway:
+  #   <<: *defaults
+  #   steps:
+  #     - setup_remote_docker:
+  #         # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
+  #         version: 20.10.18
+  #     - checkout:
+  #         path: ~/project/
+  #     - node/install:
+  #         node-version: '16.13'
+  #     - run: node --version
+  #     - run: npm i -g @railway/cli
+  #     - run:
+  #         name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
+  #         command: |
+  #           cd section-08-deploying-with-containers && railway up --detach
 
   test_regression_model_py37:
     docker:
@@ -106,7 +106,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py37
+            tox run -e py37
 
   test_regression_model_py38:
     docker:
@@ -120,7 +120,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py38
+            tox run -e py38
 
   test_ml_api_py37:
     docker:
@@ -134,7 +134,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py37
+            tox run -e py37
 
   test_ml_api_py38:
     docker:
@@ -148,7 +148,7 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             pip install --user tox
-            tox -e py38
+            tox run -e py38
 
   train_and_upload_regression_model:
     <<: *defaults
@@ -280,12 +280,12 @@ workflows:
       - section_07_test_and_upload_regression_model:
           <<: *tags_only
 
-      - section_08_deploy_app_container_via_railway:
-         filters:
-           branches:
-             only:
-               - master
-               - demo
+      # - section_08_deploy_app_container_via_railway:
+      #    filters:
+      #      branches:
+      #        only:
+      #          - master
+      #          - demo
 
 #  test-all:
 #    jobs:
